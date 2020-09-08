@@ -2,6 +2,6 @@
 
 struct AppState
 {
+    bool displaySelectActive;
     int activeDisplay;
-    int counter;
 };
