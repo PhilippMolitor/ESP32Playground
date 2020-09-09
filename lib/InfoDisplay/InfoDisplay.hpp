@@ -2,13 +2,14 @@
 #include <U8g2lib.h>
 #include "AppState.hpp"
 
-struct ScreenMode
+struct ScreenState
 {
-    enum ScreenModeType
+    enum Mode
     {
-        Battery,
-        LoadTime,
-        Disabled
+        Disabled = 0b0001,
+        Battery = 0b0010,
+        LoadTime = 0b0100,
+        Credits = 0b1000,
     };
 };
 
@@ -17,7 +18,7 @@ class InfoDisplay
 private:
     // state
     U8G2_SSD1306_128X32_UNIVISION_F_SW_I2C _display;
-    ScreenMode::ScreenModeType _mode = ScreenMode::Battery;
+    ScreenState::Mode _mode = ScreenState::Battery;
     AppState *_state;
     bool _isSelected = false;
 
@@ -63,7 +64,7 @@ public:
         // draw selected screen
         switch (_mode)
         {
-        case ScreenMode::Battery:
+        case ScreenState::Battery:
             drawMode1();
             break;
         default:
@@ -77,12 +78,12 @@ public:
         _display.sendBuffer();
     }
 
-    ScreenMode::ScreenModeType getMode()
+    ScreenState::Mode getMode()
     {
         return _mode;
     }
 
-    void setMode(ScreenMode::ScreenModeType mode)
+    void setMode(ScreenState::Mode mode)
     {
         _mode = mode;
     }

@@ -8,9 +8,9 @@ struct EC11Event
 {
     enum Rotation
     {
-        None = 0,
-        CW,
-        CCW
+        None = 0b00,
+        CW = 0b01,
+        CCW = 0b10,
     };
 
     Rotation rotation;
