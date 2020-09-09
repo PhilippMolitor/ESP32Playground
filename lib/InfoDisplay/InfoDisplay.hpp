@@ -72,11 +72,7 @@ public:
         }
 
         if (_isSelected)
-        {
             _display.drawFrame(0, 0, 128, 32);
-            if (millis() % 1000 < 500)
-                _display.clearBuffer();
-        }
 
         _display.sendBuffer();
     }
