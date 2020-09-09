@@ -4,7 +4,9 @@
 #include "AppState.hpp"
 
 EC11 knob1(17, 16, 23);
-InfoDisplay infoDisplays[2] = {InfoDisplay(19, 18), InfoDisplay(21, 22)};
+InfoDisplay infoDisplays[2] = {
+    InfoDisplay(19, 18),
+    InfoDisplay(21, 22)};
 
 AppState st;
 
@@ -41,12 +43,12 @@ void loop()
     {
       infoDisplays[st.activeDisplay].setSelected(false);
 
-      const int max = sizeof(infoDisplays) / sizeof(infoDisplays[0]);
-      st.activeDisplay = abs((st.activeDisplay + (e.rotation == EC11Event::CW ? e.amount : -e.amount)) % max);
+      // calculate next rotating index
+      const int length = sizeof(infoDisplays) / sizeof(infoDisplays[0]);
+      const int offset = (st.activeDisplay + (e.amount * (e.rotation == EC11Event::CW ? 1 : -1)));
+      st.activeDisplay = (offset % length + length) % length;
 
       infoDisplays[st.activeDisplay].setSelected(true);
-
-      log_d("active display: %d", st.activeDisplay);
     }
   }
 
